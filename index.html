@@ -7,29 +7,33 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f0f0;
             color: #333;
         }
         header {
             background: #0073e6;
             color: #fff;
-            padding: 20px;
+            padding: 40px 20px;
             text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+        }
+        h2 {
+            margin-top: 40px;
+            color: #0073e6;
         }
         section {
             padding: 20px;
-            max-width: 800px;
+            max-width: 1200px;
             margin: auto;
             background: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-        }
-        h1, h2 {
-            color: #0073e6;
         }
         .services, .testimonials {
             display: flex;
@@ -42,6 +46,15 @@
             padding: 20px;
             background: #e9ecef;
             border-radius: 8px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .service:hover, .testimonial:hover {
+            transform: scale(1.05);
+        }
+        .service i, .testimonial i {
+            font-size: 40px;
+            color: #0073e6;
         }
         form {
             display: flex;
@@ -60,9 +73,43 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background 0.3s;
         }
         button:hover {
             background: #005bb5;
+        }
+        /* Carousel */
+        .carousel {
+            position: relative;
+            max-width: 100%;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .carousel-item {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 20px;
+            text-align: center;
+        }
+        .carousel-dots {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .dot {
+            height: 10px;
+            width: 10px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .active {
+            background-color: #0073e6;
         }
     </style>
 </head>
@@ -77,14 +124,17 @@
     <h2>Unsere Dienstleistungen</h2>
     <div class="services">
         <div class="service">
+            <i class="fas fa-code"></i>
             <h3>Webentwicklung</h3>
             <p>Individuelle Weblösungen, die auf Ihre Bedürfnisse zugeschnitten sind.</p>
         </div>
         <div class="service">
+            <i class="fas fa-mobile-alt"></i>
             <h3>Responsive Design</h3>
             <p>Optimierung Ihrer Website für alle Geräte und Bildschirmgrößen.</p>
         </div>
         <div class="service">
+            <i class="fas fa-search"></i>
             <h3>SEO-Optimierung</h3>
             <p>Steigern Sie Ihre Sichtbarkeit in Suchmaschinen und gewinnen Sie mehr Kunden.</p>
         </div>
@@ -93,18 +143,25 @@
 
 <section>
     <h2>Kundenmeinungen</h2>
-    <div class="testimonials">
-        <div class="testimonial">
-            <p>"WebseitenScout24 hat meine Erwartungen übertroffen!"</p>
-            <cite>- Max Müller</cite>
+    <div class="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item">
+                <p>"WebseitenScout24 hat meine Erwartungen übertroffen!"</p>
+                <cite>- Max Müller</cite>
+            </div>
+            <div class="carousel-item">
+                <p>"Hervorragender Service und schnelle Umsetzung!"</p>
+                <cite>- Anna Schmidt</cite>
+            </div>
+            <div class="carousel-item">
+                <p>"Ich kann WebseitenScout24 nur empfehlen!"</p>
+                <cite>- Peter Fischer</cite>
+            </div>
         </div>
-        <div class="testimonial">
-            <p>"Hervorragender Service und schnelle Umsetzung!"</p>
-            <cite>- Anna Schmidt</cite>
-        </div>
-        <div class="testimonial">
-            <p>"Ich kann WebseitenScout24 nur empfehlen!"</p>
-            <cite>- Peter Fischer</cite>
+        <div class="carousel-dots">
+            <span class="dot active" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
         </div>
     </div>
 </section>
@@ -118,6 +175,34 @@
         <button type="submit">Nachricht senden</button>
     </form>
 </section>
+
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        const slides = document.getElementsByClassName("carousel-item");
+        const dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        for (let i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active";
+    }
+
+    setInterval(() => {
+        currentSlide(slideIndex += 1);
+    }, 5000); // Change slide every 5 seconds
+</script>
 
 </body>
 </html>
